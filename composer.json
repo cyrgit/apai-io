@@ -3,9 +3,13 @@
     "type": "library",
     "description": "Amazon Product Advertising PHP Library",
     "keywords": ["Amazon", "ECS", "Product Advertising", "SOAP", "REST", "Products"],
-    "homepage": "https://github.com/Exeu/apai-io",
+    "homepage": "https://github.com/cyrgit/apai-io",
     "license": "Apache-2.0",
     "authors": [
+        {
+            "name": "cyrgit",
+            "role": "Maintainer"
+        }
         {
             "name": "Jan Eichhorn",
             "email": "exeu65@googlemail.com",
@@ -18,7 +22,7 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/Exeu/apai-io/issues"
+        "issues": "https://github.com/cyrgit/apai-io/issues"
     },
     "minimum-stability": "dev",
     "require": {
