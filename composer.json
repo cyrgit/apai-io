@@ -1,13 +1,12 @@
 {
-    "name": "cyrgit/apai-io",
+    "name": "cyrrill/apai-io",
     "type": "library",
     "description": "Amazon Product Advertising PHP Library",
     "keywords": ["Amazon", "ECS", "Product Advertising", "SOAP", "REST", "Products"],
-    "homepage": "https://github.com/cyrgit/apai-io",
     "license": "Apache-2.0",
     "authors": [
         {
-            "name": "cyrgit",
+            "name": "cyrrill",
             "role": "Maintainer"
         },
         {
@@ -22,14 +21,18 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/cyrgit/apai-io/issues"
+        "issues": "https://github.com/cyrrill/apai-io/issues"
     },
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
-        "php": ">=5.3.0",
-        "ext-curl": "*"
+        "php": ">=5.6.0",
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~5.0"
     },
     "autoload": {
-        "psr-0": { "ApaiIO": "lib/" }
+        "psr-4": { "ApaiIO\\": "src/ApaiIO" }
     }
 }
