@@ -55,7 +55,5 @@ class CartCreate extends AbstractOperation
                 $itemIdentifier => $id,
                 'Quantity' => $quantity
         ));
-
-        $this->itemCounter++;
     }
 }
