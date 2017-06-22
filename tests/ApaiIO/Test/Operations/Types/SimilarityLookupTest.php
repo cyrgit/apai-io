@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2013 Jan Eichhorn <exeu65@googlemail.com>
+ * Copyright 2016 Jan Eichhorn <exeu65@googlemail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 
 namespace ApaiIO\Test\Operations\Types;
 
-use ApaiIO\Common\OperationTrait;
 use ApaiIO\Operations\SimilarityLookup;
 
 class SimilarityLookupTest extends \PHPUnit_Framework_TestCase
@@ -32,5 +31,13 @@ class SimilarityLookupTest extends \PHPUnit_Framework_TestCase
     {
         $lookup = new SimilarityLookup();
         $this->assertEquals('SimilarityLookup', $lookup->getName());
+    }
+
+    public function testGetItemId()
+    {
+        $lookup = new SimilarityLookup();
+        $this->assertEquals(null, $lookup->getItemId());
+        $lookup->setItemId('B0117IJ4LE');
+        $this->assertEquals('B0117IJ4LE', $lookup->getItemId());
     }
 }

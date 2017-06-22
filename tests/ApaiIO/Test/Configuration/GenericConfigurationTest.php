@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2013 Jan Eichhorn <exeu65@googlemail.com>
+ * Copyright 2016 Jan Eichhorn <exeu65@googlemail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,54 +18,26 @@
 namespace ApaiIO\Test\Configuration;
 
 use ApaiIO\Configuration\GenericConfiguration;
+use ApaiIO\Request\GuzzleRequest;
+use ApaiIO\ResponseTransformer\XmlToDomDocument;
 
 class GenericConfigurationTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var \ApaiIO\Configuration\GenericConfiguration
-     */
-    private $genericConfiguration;
-
-    protected function setUp()
+    public function testGettersAndSetters()
     {
-        $this->genericConfiguration = new GenericConfiguration();
-        parent::setUp();
-    }
+        $object = new GenericConfiguration();
 
-    public function testSetRequestFactoryExeptsClosure()
-    {
-        $this->genericConfiguration->setRequestFactory(function(){});
-    }
+        $object->setAccessKey('ABC');
+        $object->setSecretKey('DEF');
+        $object->setAssociateTag('GHI');
+        $object->setResponseTransformer($a = new XmlToDomDocument());
+        $object->setRequest($b = new GuzzleRequest($this->prophesize('\GuzzleHttp\ClientInterface')->reveal()));
 
-    public function testSetRequestFactoryExeptsCallable()
-    {
-        $this->genericConfiguration->setRequestFactory(array(__NAMESPACE__ . '\CallableClass', 'foo'));
-    }
-
-    /**
-     * @expectedException InvalidArgumentException
-     */
-    public function testSetRequestFactoryThrowExceptionIfArgumentIsNotCallable()
-    {
-        $this->genericConfiguration->setRequestFactory("");
-    }
-
-    public function testSetResponseTransformerFactoryExeptsClosure()
-    {
-        $this->genericConfiguration->setResponseTransformerFactory(function(){});
-    }
-
-    public function testSetResponseTransformerExeptsCallable()
-    {
-        $this->genericConfiguration->setResponseTransformerFactory(array(__NAMESPACE__ . '\CallableClass', 'foo'));
-    }
-
-    /**
-     * @expectedException InvalidArgumentException
-     */
-    public function testSetResponseTransformerFactoryThrowExceptionIfArgumentIsNotCallable()
-    {
-        $this->genericConfiguration->setResponseTransformerFactory("");
+        $this->assertSame('ABC', $object->getAccessKey());
+        $this->assertSame('DEF', $object->getSecretKey());
+        $this->assertSame('GHI', $object->getAssociateTag());
+        $this->assertSame($a, $object->getResponseTransformer());
+        $this->assertSame($b, $object->getRequest());
     }
 
     /**
@@ -83,12 +55,5 @@ class GenericConfigurationTest extends \PHPUnit_Framework_TestCase
         $object->setCountry('DE');
 
         $this->assertEquals('de', $object->getCountry());
-    }
-}
-
-class CallableClass
-{
-    public static function foo()
-    {
     }
 }

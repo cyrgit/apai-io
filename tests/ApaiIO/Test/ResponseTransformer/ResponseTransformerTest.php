@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2013 Jan Eichhorn <exeu65@googlemail.com>
+ * Copyright 2016 Jan Eichhorn <exeu65@googlemail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,27 +17,12 @@
 
 namespace ApaiIO\Test\ResponseTransformer;
 
-use ApaiIO\ResponseTransformer\ObjectToArray;
+use ApaiIO\ResponseTransformer\XmlToArray;
 use ApaiIO\ResponseTransformer\XmlToDomDocument;
 use ApaiIO\ResponseTransformer\XmlToSimpleXmlObject;
 
 class ResponseTransformerTest extends \PHPUnit_Framework_TestCase
 {
-    public function testObjectToArray()
-    {
-        $stdClassSub = new \stdClass();
-        $stdClassSub->baz = 'bar';
-
-        $stdClass = new \stdClass();
-        $stdClass->foo = 'bar';
-        $stdClass->bar = $stdClassSub;
-
-        $array = array('foo' => 'bar', 'bar' => array('baz' => 'bar'));
-        $transformer = new ObjectToArray();
-
-        $this->assertEquals($array, $transformer->transform($stdClass));
-    }
-
     public function testXmlToDomDocument()
     {
         $transformer = new XmlToDomDocument();
@@ -60,6 +45,19 @@ class ResponseTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\SimpleXMLElement', $simpleXML);
         $this->assertEquals('Wikipedia Städteverzeichnis', $simpleXML->titel);
         $this->assertEquals('Genf', $simpleXML->eintrag[0]->stichwort);
+    }
+
+    public function testXmlToArray()
+    {
+        $transformer = new XmlToArray();
+
+        $sampleXML = $this->getSampleXMLResponse();
+
+        $array = $transformer->transform($sampleXML);
+
+        $this->assertInternalType('array', $array);
+        $this->assertEquals('Wikipedia Städteverzeichnis', $array['titel']);
+        $this->assertEquals('Genf', $array['eintrag']['0']['stichwort']);
     }
 
     /**
