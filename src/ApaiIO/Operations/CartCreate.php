@@ -25,6 +25,8 @@ namespace ApaiIO\Operations;
  */
 class CartCreate extends AbstractOperation
 {
+    private $itemCounter = 1;
+
     /**
      * {@inheritdoc}
      */
