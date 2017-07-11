@@ -49,11 +49,11 @@ class CartCreate extends AbstractOperation
      */
     public function addItem($id, $quantity, $byAsin = true)
     {
-        $itemIdentifier = ($byAsin) ? 'ASIN' : 'OfferListingId';
-        $this->parameter['Items'] = array(
-            'Item' => array(
-                $itemIdentifier => $id,
-                'Quantity' => $quantity
-        ));
+        $itemIdentifier = ($byAsin) ? '.ASIN' : '.OfferListingId';
+
+        $this->parameters['Item.' . $this->itemCounter . $itemIdentifier] = $id;
+        $this->parameters['Item.' . $this->itemCounter . '.Quantity'] = $quantity;
+
+        $this->itemCounter++;
     }
 }
