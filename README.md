@@ -1,10 +1,10 @@
 # apai-io
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Exeu/apai-io/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Exeu/apai-io/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/Exeu/apai-io/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Exeu/apai-io/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/Exeu/apai-io/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Exeu/apai-io/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cyrrill/apai-io/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cyrrill/apai-io/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/cyrrill/apai-io/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/cyrrill/apai-io/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/cyrrill/apai-io/badges/build.png?b=master)](https://scrutinizer-ci.com/g/cyrrill/apai-io/build-status/master)
 [![Latest Stable Version](https://poser.pugx.org/exeu/apai-io/v/stable.svg)](https://packagist.org/packages/exeu/apai-io) [![Total Downloads](https://poser.pugx.org/exeu/apai-io/downloads.svg)](https://packagist.org/packages/exeu/apai-io)
-[![Build Status](https://travis-ci.org/Exeu/apai-io.png?branch=master)](https://travis-ci.org/Exeu/apai-io)
+[![Build Status](https://travis-ci.org/cyrrill/apai-io.png?branch=master)](https://travis-ci.org/cyrrill/apai-io)
 [![Documentation Status](https://readthedocs.org/projects/apai-io/badge/?version=stable)](http://apai-io.readthedocs.io/en/stable/?badge=stable)
 
 ApaiIO is a highly flexible PHP library for fetching the Product Advertising API using REST or SOAP.
@@ -15,6 +15,10 @@ Everything is programmed against interfaces so you can implement your own reques
 This class is realized by the Product Advertising API (former ECS) from Amazon WS Front. https://affiliate-program.amazon.com/gp/advertising/api/detail/main.html
 
 You can try it out with the new demo site: http://apaiio.dev.pixel-web.org/
+
+
+NOTE:  This is a fork with added functionality maintained by cyrrill, since it diverges significantly in features from the original source, it has a differnt composer handle. It is not expected to be merged into mainline, but does receive updates from upstream when available.
+
 
 ## Documentation
 
@@ -31,7 +35,7 @@ Add apai-io in your composer.json or create a new composer.json:
 ```js
 {
     "require": {
-        "exeu/apai-io": "~2.0"
+        "cyrrill/apai-io": "~2.0"
     }
 }
 ```
