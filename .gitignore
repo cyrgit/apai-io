@@ -12,4 +12,4 @@ vendor
 *.orig
 build
 docs/_*
-/nbproject/private/
+/nbproject/
