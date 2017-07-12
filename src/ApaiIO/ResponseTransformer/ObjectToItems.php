@@ -1,28 +1,28 @@
 <?php
 /**
- * 
+ *
  */
 namespace ApaiIO\ResponseTransformer;
 
 /**
- * 
+ *
  */
 class ObjectToItems extends ObjectToArray implements ResponseTransformerInterface
 {
 	/**
 	 *
-	 * @var type 
+	 * @var type
 	 */
     protected $data = array();
-	
+
 	/**
 	 *
-	 * @var type 
+	 * @var type
 	 */
 	protected $items = array();
-	
+
 	/**
-	 * 
+	 *
 	 * @param type $response
 	 * @return type
 	 */
@@ -36,6 +36,7 @@ class ObjectToItems extends ObjectToArray implements ResponseTransformerInterfac
         for( $i=0; $i < $c; $i++ )
         {
             $this->set( $i, 'asin', 'ASIN' );
+            $this->set( $i, 'sales_rank', 'SalesRank' );
             $this->set( $i, 'title', 'ItemAttributes', 'Title' );
             $this->set( $i, 'manufacturer', 'ItemAttributes', 'Manufacturer' );
             $this->set( $i, 'isbn', 'ItemAttributes', 'ISBN' );
@@ -65,16 +66,16 @@ class ObjectToItems extends ObjectToArray implements ResponseTransformerInterfac
 
         return $this->data;
     }
-	
+
 	/**
-	 * 
+	 *
 	 * @param type $response
 	 * @return mixed
 	 */
 	protected function get_items($response)
 	{
-        $response = $this->buildArray($response);	
-		
+        $response = $this->buildArray($response);
+
 		if( isset($response['Items']['Item']) AND is_array($response['Items']['Item']) )
 		{
 			return $this->items = $response['Items']['Item'];
@@ -82,12 +83,12 @@ class ObjectToItems extends ObjectToArray implements ResponseTransformerInterfac
 		else
 		{
 			return FALSE;
-		}		
+		}
 	}
 
 
 	/**
-	 * 
+	 *
 	 * @param type $data
 	 * @param type $key1
 	 * @param type $key2
@@ -114,10 +115,10 @@ class ObjectToItems extends ObjectToArray implements ResponseTransformerInterfac
 			if( isset($this->items[$i][$key1]) )
 			{
 				$this->data[$i][$data] = $this->items[$i][$key1];
-			}			
+			}
 		}
 	}
-	
+
     protected function set_array($i, $data, $key1, $key2=NULL, $key3=NULL)
     {
         $this->set($i, $data, $key1, $key2, $key3);
@@ -150,7 +151,7 @@ class ObjectToItems extends ObjectToArray implements ResponseTransformerInterfac
     }
 
     /**
-	 * 
+	 *
 	 */
 	private function get_image_sets($i)
 	{
@@ -158,9 +159,9 @@ class ObjectToItems extends ObjectToArray implements ResponseTransformerInterfac
 				AND is_array($this->items[$i]['ImageSets']['ImageSet']) )
 		{
 			$this->data[$i]['image_sets'] = array();
-			
+
 			$sets = $this->items[$i]['ImageSets'];
-			
+
 			foreach( $sets as $set )
 			{
 				$row = array();
@@ -171,7 +172,7 @@ class ObjectToItems extends ObjectToArray implements ResponseTransformerInterfac
 				if( isset($set['LargeImage']['URL']) )
 				{
 					$row['large_image'] = $set['LargeImage']['URL'];
-				}				
+				}
 				$this->data[$i]['image_sets'][] = $row;
 			}
 		}
