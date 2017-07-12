@@ -45,7 +45,15 @@ class ApaiIO
     /**
      * @param ConfigurationInterface $configuration
      */
-    public function __construct(ConfigurationInterface $configuration)
+    public function __construct(ConfigurationInterface $configuration = null)
+    {
+        $this->configuration = $configuration;
+    }
+
+    /**
+     * @param ConfigurationInterface $configuration
+     */
+    public function setConfiguration(ConfigurationInterface $configuration)
     {
         $this->configuration = $configuration;
     }
