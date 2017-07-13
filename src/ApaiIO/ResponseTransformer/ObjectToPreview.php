@@ -110,6 +110,9 @@ class ObjectToPreview extends ObjectToArray implements ResponseTransformerInterf
         }
     }
 
+    /**
+     * @param integer $i
+     */
     private function get_price($i)
     {
         $list_price = isset( $this->items[$i]['ItemAttributes']['ListPrice']['Amount'] ) ? $this->items[$i]['ItemAttributes']['ListPrice']['Amount'] : NULL;
