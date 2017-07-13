@@ -29,39 +29,13 @@ class ObjectToArray implements ResponseTransformerInterface
      */
     public function transform($response)
     {
-        return $this->buildArray($response);
-    }
-
-    /**
-     * Transforms the responseobject to an array
-     *
-     * @param object $object
-     *
-     * @return array An arrayrepresentation of the given object
-     */
-    protected function buildArray($object)
-    {
-        $out = array();
-        foreach ($object as $key => $value) {
-            switch (true) {
-                case is_object($value):
-                    $out[$key] = $this->buildArray($value);
-                    break;
-                case is_array($value):
-                    $out[$key] = $this->buildArray($value);
-                    break;
-                default:
-                    $out[$key] = $value;
-                    break;
-            }
-        }
-
-        return $out;
+        $simpleXml = simplexml_load_string($response);
+        return json_decode(json_encode($simpleXml), true);
     }
 
     /**
      * Cleans response from CSS, JS, and other embedded meta information
-     * 
+     *
      * @param string $text
      * @return string
      */

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * 
+ *
  */
 
 namespace ApaiIO\ResponseTransformer;
 
 /**
- * 
+ *
  */
 class ObjectToItem extends ObjectToArray implements ResponseTransformerInterface {
 
@@ -24,12 +24,14 @@ class ObjectToItem extends ObjectToArray implements ResponseTransformerInterface
     protected $item = array();
 
     /**
-     * 
+     *
      * @param type $response
      * @return type
      */
     public function transform($response)
     {
+        $response = parent::transform($response);
+
         if( !$this->get_item( $response ) )
         {
             return array();
@@ -72,8 +74,6 @@ class ObjectToItem extends ObjectToArray implements ResponseTransformerInterface
      */
     protected function get_item($response)
     {
-        $response = $this->buildArray( $response );
-
         if( isset( $response['Items']['Item'] ) AND is_array( $response['Items']['Item'] ) )
         {
             if( array_key_exists( 1, $response['Items']['Item'] ) )

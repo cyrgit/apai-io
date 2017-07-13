@@ -28,7 +28,9 @@ class ObjectToItems extends ObjectToArray implements ResponseTransformerInterfac
 	 */
 	public function transform($response)
     {
-		if( ! $this->get_items( $response ) )
+        $response = parent::transform($response);
+
+        if( ! $this->get_items( $response ) )
 		{
 			return array();
 		}
@@ -38,6 +40,7 @@ class ObjectToItems extends ObjectToArray implements ResponseTransformerInterfac
             $this->set( $i, 'asin', 'ASIN' );
             $this->set( $i, 'sales_rank', 'SalesRank' );
             $this->set( $i, 'title', 'ItemAttributes', 'Title' );
+            $this->set( $i, 'url', 'DetailPageURL');
             $this->set( $i, 'manufacturer', 'ItemAttributes', 'Manufacturer' );
             $this->set( $i, 'isbn', 'ItemAttributes', 'ISBN' );
             $this->set( $i, 'publisher', 'ItemAttributes', 'Publisher' );
@@ -74,8 +77,6 @@ class ObjectToItems extends ObjectToArray implements ResponseTransformerInterfac
 	 */
 	protected function get_items($response)
 	{
-        $response = $this->buildArray($response);
-
 		if( isset($response['Items']['Item']) AND is_array($response['Items']['Item']) )
 		{
 			return $this->items = $response['Items']['Item'];
