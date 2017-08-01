@@ -17,6 +17,12 @@ class ObjectToPreview extends ObjectToArray implements ResponseTransformerInterf
 
     /**
      *
+     * @var array
+     */
+    protected $categories = [];
+
+    /**
+     *
      * @param string $response
      * @return array
      */
@@ -24,9 +30,11 @@ class ObjectToPreview extends ObjectToArray implements ResponseTransformerInterf
     {
         $response = parent::transform($response);
 
-        if (!$this->get_items($response)) {
+        if (!$this->getItems($response)) {
             return [];
         }
+
+        $this->getCategories($response);
 
         $c = count($this->items);
         for ($i = 0; $i < $c; $i++) {
@@ -39,10 +47,12 @@ class ObjectToPreview extends ObjectToArray implements ResponseTransformerInterf
             $this->set($i, 'large_image', 'LargeImage', 'URL');
             $this->set($i, 'medium_image', 'MediumImage', 'URL');
             $this->set($i, 'small_image', 'SmallImage', 'URL');
-            $this->get_price($i);
         }
 
-        return $this->data;
+        return [
+            'items' => $this->data,
+            'categories' => $this->categories
+        ];
     }
 
     /**
@@ -50,12 +60,30 @@ class ObjectToPreview extends ObjectToArray implements ResponseTransformerInterf
      * @param type $response
      * @return mixed
      */
-    protected function get_items($response)
+    protected function getItems($response)
     {
         if (isset($response['Items']['Item']) AND is_array($response['Items']['Item'])) {
             return $this->items = $response['Items']['Item'];
         } else {
             return false;
+        }
+    }
+
+    /**
+     *
+     * @param array $response
+     */
+    protected function getCategories($response)
+    {
+        if (isset($response['Items']['SearchBinSets']['SearchBinSet']['Bin'])) {
+            foreach ($response['Items']['SearchBinSets']['SearchBinSet']['Bin'] as $bin) {
+                if (isset($bin['BinParameter']['Name']) && $bin['BinParameter']['Name'] == 'SearchIndex') {
+                    $this->categories[] = $bin['BinParameter']['Value'];
+                }
+                if (count($this->categories) >= 10) {
+                    return;
+                }
+            }
         }
     }
 
@@ -87,33 +115,5 @@ class ObjectToPreview extends ObjectToArray implements ResponseTransformerInterf
                 $this->data[$i][$data] = $this->items[$i][$key1];
             }
         }
-    }
-
-    /**
-     *
-     * @param int $i
-     * @param string $data
-     * @param string $key1
-     * @param string $key2
-     * @param string $key3
-     */
-    protected function set_array($i, $data, $key1, $key2 = null, $key3 = null)
-    {
-        $this->set($i, $data, $key1, $key2, $key3);
-        if (isset($this->data[$i][$data]) AND ! is_array($this->data[$i][$data])) {
-            $this->data[$i][$data] = array($this->data[$i][$data]);
-        }
-    }
-
-    /**
-     * @param integer $i
-     */
-    private function get_price($i)
-    {
-        $list_price = isset($this->items[$i]['ItemAttributes']['ListPrice']['Amount']) ? $this->items[$i]['ItemAttributes']['ListPrice']['Amount'] : null;
-        $amazon_price = isset($this->items[$i]['Offers']['Offer']['OfferListing']['Price']['Amount']) ? $this->items[$i]['Offers']['Offer']['OfferListing']['Price']['Amount'] : null;
-        $saved = isset($this->items[$i]['Offers']['Offer']['OfferListing']['AmountSaved']) ? $this->items[$i]['Offers']['Offer']['OfferListing']['AmountSaved']['Amount'] : null;
-        $price = ($list_price) ? $list_price : ($amazon_price ? ($amazon_price + $saved) : null );
-        $this->data[$i]['price'] = ($price) ? $price : (isset($this->data[$i]['lowest_new_price']) ? $this->data[$i]['lowest_new_price'] : null);
     }
 }
