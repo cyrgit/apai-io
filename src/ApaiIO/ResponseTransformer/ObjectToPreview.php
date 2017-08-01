@@ -80,12 +80,119 @@ class ObjectToPreview extends ObjectToArray implements ResponseTransformerInterf
         if (isset($response['Items']['SearchBinSets']['SearchBinSet']['Bin'])) {
             foreach ($response['Items']['SearchBinSets']['SearchBinSet']['Bin'] as $bin) {
                 if (isset($bin['BinParameter']['Name']) && $bin['BinParameter']['Name'] == 'SearchIndex') {
-                    $this->categories[] = $bin['BinParameter']['Value'];
+                    $this->categories[] = $this->categoryValue($bin['BinParameter']['Value']);
                 }
                 if (count($this->categories) >= 10) {
                     return;
                 }
             }
+        }
+    }
+
+    protected function categoryValue($value)
+    {
+        switch ($value) {
+            case 'All':
+                return ['key' => $value, 'value' => 'All Departments'];
+                break;
+            case 'ArtsAndCrafts':
+                return ['key' => $value, 'value' => 'Arts, Crafts & Sewing'];
+                break;
+            case 'Collectibles':
+                return ['key' => $value, 'value' => 'Collectibles & Fine Arts'];
+                break;
+            case 'Fashion':
+                return ['key' => $value, 'value' => 'Clothing, Shoes & Jewelry'];
+                break;
+            case 'FashionBaby':
+                return ['key' => $value, 'value' => 'Clothing, Shoes & Jewelry - Baby'];
+                break;
+            case 'FashionBoys':
+                return ['key' => $value, 'value' => 'Clothing, Shoes & Jewelry - Boys'];
+                break;
+            case 'FashionGirls':
+                return ['key' => $value, 'value' => 'Clothing, Shoes & Jewelry - Girls'];
+                break;
+            case 'FashionMen':
+                return ['key' => $value, 'value' => 'Clothing, Shoes & Jewelry - Men'];
+                break;
+            case 'FashionWomen':
+                return ['key' => $value, 'value' => 'Clothing, Shoes & Jewelry - Women'];
+                break;
+            case 'GiftCards':
+                return ['key' => $value, 'value' => 'Gift Cards'];
+                break;
+            case 'Grocery':
+                return ['key' => $value, 'value' => 'Grocery & Gourmet Food'];
+                break;
+            case 'HealthPersonalCare':
+                return ['key' => $value, 'value' => 'Health & Personal Care'];
+                break;
+            case 'HomeGarden':
+                return ['key' => $value, 'value' => 'Home & Kitchen'];
+                break;
+            case 'Industrial':
+                return ['key' => $value, 'value' => 'Industrial & Scientific'];
+                break;
+            case 'KindleStore':
+                return ['key' => $value, 'value' => 'Kindle Store'];
+                break;
+            case 'LawnAndGarden':
+                return ['key' => $value, 'value' => 'Patio, Lawn & Garden'];
+                break;
+            case 'Luggage':
+                return ['key' => $value, 'value' => 'Luggage & Travel Gear'];
+                break;
+            case 'Magazines':
+                return ['key' => $value, 'value' => 'Magazine Subscriptions'];
+                break;
+            case 'MobileApps':
+                return ['key' => $value, 'value' => 'Apps & Games'];
+                break;
+            case 'Movies':
+                return ['key' => $value, 'value' => 'Movies & TV'];
+                break;
+            case 'MP3Downloads':
+                return ['key' => $value, 'value' => 'Digital Music'];
+                break;
+            case 'Music':
+                return ['key' => $value, 'value' => 'CDs & Vinyl'];
+                break;
+            case 'MusicalInstruments':
+                return ['key' => $value, 'value' => 'Musical Instruments'];
+                break;
+            case 'OfficeProducts':
+                return ['key' => $value, 'value' => 'Office Products'];
+                break;
+            case 'Pantry':
+                return ['key' => $value, 'value' => 'Prime Pantry'];
+                break;
+            case 'PCHardware':
+                return ['key' => $value, 'value' => 'Computers'];
+                break;
+            case 'PetSupplies':
+                return ['key' => $value, 'value' => 'Pet Supplies'];
+                break;
+            case 'SportingGoods':
+                return ['key' => $value, 'value' => 'Sports & Outdoors'];
+                break;
+            case 'Tools':
+                return ['key' => $value, 'value' => 'Tools & Home Improvement'];
+                break;
+            case 'Toys':
+                return ['key' => $value, 'value' => 'Toys & Games'];
+                break;
+            case 'UnboxVideo':
+                return ['key' => $value, 'value' => 'Amazon Instant Video'];
+                break;
+            case 'VideoGames':
+                return ['key' => $value, 'value' => 'Video Games'];
+                break;
+            case 'Wireless':
+                return ['key' => $value, 'value' => 'Cell Phones & Accessories'];
+                break;
+            default:
+                return ['key' => $value, 'value' => $value];
         }
     }
 
