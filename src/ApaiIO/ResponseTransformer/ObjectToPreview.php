@@ -39,7 +39,9 @@ class ObjectToPreview extends ObjectToArray implements ResponseTransformerInterf
         $c = count($this->items);
         for ($i = 0; $i < $c; $i++) {
             $this->set($i, 'asin', 'ASIN');
-            $this->set($i, 'category', 'BrowseNodes', 'BrowseNode', 0, 'Name');
+            if (!$this->set($i, 'category', 'BrowseNodes', 'Name')) {
+                $this->set($i, 'category', 'BrowseNodes', 'BrowseNode', 0, 'Name');
+            }
             $this->set($i, 'sales_rank', 'SalesRank');
             $this->set($i, 'title', 'ItemAttributes', 'Title');
             $this->set($i, 'url', 'DetailPageURL');
@@ -101,19 +103,24 @@ class ObjectToPreview extends ObjectToArray implements ResponseTransformerInterf
         if ($key4 !== null) {
             if (isset($this->items[$i][$key1][$key2][$key3][$key4])) {
                 $this->data[$i][$data] = $this->items[$i][$key1][$key2][$key3][$key4];
+                return true;
             }
         } elseif ($key3 !== null) {
             if (isset($this->items[$i][$key1][$key2][$key3])) {
                 $this->data[$i][$data] = $this->items[$i][$key1][$key2][$key3];
+                return true;
             }
         } elseif ($key2 !== null) {
             if (isset($this->items[$i][$key1][$key2])) {
                 $this->data[$i][$data] = $this->items[$i][$key1][$key2];
+                return true;
             }
         } else {
             if (isset($this->items[$i][$key1])) {
                 $this->data[$i][$data] = $this->items[$i][$key1];
+                return true;
             }
         }
+        return false;
     }
 }
