@@ -39,7 +39,7 @@ class ObjectToPreview extends ObjectToArray implements ResponseTransformerInterf
         $c = count($this->items);
         for ($i = 0; $i < $c; $i++) {
             $this->set($i, 'asin', 'ASIN');
-            if (!$this->set($i, 'category', 'BrowseNodes', 'Name')) {
+            if (!$this->set($i, 'category', 'BrowseNodes', 'BrowseNode', 'Name')) {
                 $this->set($i, 'category', 'BrowseNodes', 'BrowseNode', 0, 'Name');
             }
             $this->set($i, 'sales_rank', 'SalesRank');
